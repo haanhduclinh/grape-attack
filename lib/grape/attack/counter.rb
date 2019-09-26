@@ -35,7 +35,16 @@ module Grape
       private
 
       def key
-        "#{request.method}:#{request.path}:#{request.client_identifier}"
+        # remove id
+        key_path = request.path.split("/").map do |element|
+          if element.to_i.zero?
+            element
+          else
+            ':id'
+          end
+        end.join("/")
+
+        "#{request.method}:#{key_path}:#{request.client_identifier}"
       end
 
       def store(value, exp)
