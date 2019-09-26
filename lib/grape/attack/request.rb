@@ -9,7 +9,7 @@ module Grape
       def initialize(env)
         @env              = env
         @context          = env['api.endpoint']
-        @request          = @context.routes.first
+        @request          = Grape::Request.new(env)
         @throttle_options = ::Grape::Attack::Options.new(@context.route_setting(:throttle))
       end
 
